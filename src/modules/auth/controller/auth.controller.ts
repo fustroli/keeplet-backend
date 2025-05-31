@@ -8,7 +8,6 @@ import {
   Req,
   Res,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
@@ -22,7 +21,6 @@ import {
 } from 'src/modules/auth/dto';
 import { GoogleAuthGuard, RefreshJwtGuard } from 'src/modules/auth/guard';
 import { AuthService } from 'src/modules/auth/services';
-import { UserInterceptor } from 'src/modules/user/interceptors';
 
 @UseGuards(ThrottlerGuard)
 @ApiTags('auth')
@@ -32,14 +30,12 @@ export class AuthController {
 
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)
-  @UseInterceptors(UserInterceptor)
   signup(@Body() dto: CreateUserDto, @Res() res: Response) {
     return this.authService.signUp(dto, res);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  @UseInterceptors(UserInterceptor)
   signin(@Body() dto: LoginUserDto, @Res() res: Response) {
     return this.authService.signIn(dto, res);
   }

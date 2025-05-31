@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Patch,
   UseGuards,
   UseInterceptors,
@@ -28,6 +29,10 @@ export class UserController {
   @UseInterceptors(UserInterceptor)
   @ApiOkResponse({ type: UserResponseDto })
   async getMe(@CurrentUser() currentUser: User): Promise<UserResponseDto> {
+    if (!currentUser) {
+      throw new NotFoundException('Current user not found');
+    }
+
     return currentUser;
   }
 

@@ -16,14 +16,6 @@ export class UserInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<User>,
   ): Observable<UserResponseDto> | Promise<Observable<UserResponseDto>> {
-    return next.handle().pipe(
-      map((user) =>
-        plainToInstance(User, user, {
-          enableCircularCheck: true,
-          excludeExtraneousValues: true,
-          exposeUnsetFields: false,
-        }),
-      ),
-    );
+    return next.handle().pipe(map((user) => plainToInstance(User, user)));
   }
 }
