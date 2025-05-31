@@ -1,6 +1,7 @@
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from 'src/modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -17,6 +18,7 @@ import { throttlerConfig } from 'src/config';
         limit: throttlerConfig.LIMIT,
       },
     ]),
+    AuthModule,
   ],
   controllers: [],
   providers: [
