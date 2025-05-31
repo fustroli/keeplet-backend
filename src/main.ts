@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { appConfig } from 'src/config';
 import helmet from 'helmet';
+import { initializeSwagger } from 'src/swagger';
 import { json } from 'express';
 
 async function bootstrap() {
@@ -30,6 +31,7 @@ async function bootstrap() {
 
   app.use(json({ limit: '20kb' }));
 
+  initializeSwagger(app);
   await app.listen(port);
 }
 bootstrap();
